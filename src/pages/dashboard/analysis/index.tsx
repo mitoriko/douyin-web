@@ -43,10 +43,7 @@ interface AnalysisState {
     loading: loading.effects['dashboardAndanalysis/fetch'],
   }),
 )
-class Analysis extends Component<
-  AnalysisProps,
-  AnalysisState
-> {
+class Analysis extends Component<AnalysisProps, AnalysisState> {
   state: AnalysisState = {
     salesType: 'all',
     currentTabKey: '',
@@ -144,76 +141,76 @@ class Analysis extends Component<
     } else {
       salesPieData = salesType === 'online' ? salesTypeDataOnline : salesTypeDataOffline;
     }
-    const menu = (
-      <Menu>
-        <Menu.Item>操作一</Menu.Item>
-        <Menu.Item>操作二</Menu.Item>
-      </Menu>
-    );
+    // const menu = (
+    //   <Menu>
+    //     <Menu.Item>操作一</Menu.Item>
+    //     <Menu.Item>操作二</Menu.Item>
+    //   </Menu>
+    // );
+    //
+    // const dropdownGroup = (
+    //   <span className={styles.iconGroup}>
+    //     <Dropdown overlay={menu} placement="bottomRight">
+    //       <Icon type="ellipsis" />
+    //     </Dropdown>
+    //   </span>
+    // );
 
-    const dropdownGroup = (
-      <span className={styles.iconGroup}>
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Icon type="ellipsis" />
-        </Dropdown>
-      </span>
-    );
-
-    const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
+    // const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
     return (
       <GridContent>
         <React.Fragment>
           <Suspense fallback={<PageLoading />}>
             <IntroduceRow loading={loading} visitData={visitData} />
           </Suspense>
-          <Suspense fallback={null}>
-            <SalesCard
-              rangePickerValue={rangePickerValue}
-              salesData={salesData}
-              isActive={this.isActive}
-              handleRangePickerChange={this.handleRangePickerChange}
-              loading={loading}
-              selectDate={this.selectDate}
-            />
-          </Suspense>
-          <Row
-            gutter={24}
-            type="flex"
-            style={{
-              marginTop: 24,
-            }}
-          >
-            <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-              <Suspense fallback={null}>
-                <TopSearch
-                  loading={loading}
-                  visitData2={visitData2}
-                  searchData={searchData}
-                  dropdownGroup={dropdownGroup}
-                />
-              </Suspense>
-            </Col>
-            <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-              <Suspense fallback={null}>
-                <ProportionSales
-                  dropdownGroup={dropdownGroup}
-                  salesType={salesType}
-                  loading={loading}
-                  salesPieData={salesPieData}
-                  handleChangeSalesType={this.handleChangeSalesType}
-                />
-              </Suspense>
-            </Col>
-          </Row>
-          <Suspense fallback={null}>
-            <OfflineData
-              activeKey={activeKey}
-              loading={loading}
-              offlineData={offlineData}
-              offlineChartData={offlineChartData}
-              handleTabChange={this.handleTabChange}
-            />
-          </Suspense>
+          {/*<Suspense fallback={null}>*/}
+          {/*<SalesCard*/}
+          {/*rangePickerValue={rangePickerValue}*/}
+          {/*salesData={salesData}*/}
+          {/*isActive={this.isActive}*/}
+          {/*handleRangePickerChange={this.handleRangePickerChange}*/}
+          {/*loading={loading}*/}
+          {/*selectDate={this.selectDate}*/}
+          {/*/>*/}
+          {/*</Suspense>*/}
+          {/*<Row*/}
+          {/*gutter={24}*/}
+          {/*type="flex"*/}
+          {/*style={{*/}
+          {/*marginTop: 24,*/}
+          {/*}}*/}
+          {/*>*/}
+          {/*<Col xl={12} lg={24} md={24} sm={24} xs={24}>*/}
+          {/*<Suspense fallback={null}>*/}
+          {/*<TopSearch*/}
+          {/*loading={loading}*/}
+          {/*visitData2={visitData2}*/}
+          {/*searchData={searchData}*/}
+          {/*dropdownGroup={dropdownGroup}*/}
+          {/*/>*/}
+          {/*</Suspense>*/}
+          {/*</Col>*/}
+          {/*<Col xl={12} lg={24} md={24} sm={24} xs={24}>*/}
+          {/*<Suspense fallback={null}>*/}
+          {/*<ProportionSales*/}
+          {/*dropdownGroup={dropdownGroup}*/}
+          {/*salesType={salesType}*/}
+          {/*loading={loading}*/}
+          {/*salesPieData={salesPieData}*/}
+          {/*handleChangeSalesType={this.handleChangeSalesType}*/}
+          {/*/>*/}
+          {/*</Suspense>*/}
+          {/*</Col>*/}
+          {/*</Row>*/}
+          {/*<Suspense fallback={null}>*/}
+          {/*<OfflineData*/}
+          {/*activeKey={activeKey}*/}
+          {/*loading={loading}*/}
+          {/*offlineData={offlineData}*/}
+          {/*offlineChartData={offlineChartData}*/}
+          {/*handleTabChange={this.handleTabChange}*/}
+          {/*/>*/}
+          {/*</Suspense>*/}
         </React.Fragment>
       </GridContent>
     );
