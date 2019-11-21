@@ -123,6 +123,12 @@ export default {
               component: './dashboard/analysis',
             },
             {
+              name: 'dyuser',
+              icon: 'dashboard',
+              path: '/dashboard/dyuser',
+              component: './dashboard/dyuser',
+            },
+            {
               component: './404',
             },
           ],
@@ -156,7 +162,7 @@ export default {
         resourcePath: string;
       },
       _: string,
-      localName: string
+      localName: string,
     ) => {
       if (
         context.resourcePath.includes('node_modules') ||
@@ -186,7 +192,7 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/api/': {
-      target: 'http://192.168.1.110:8999',
+      target: 'http://localhost:8999',
       changeOrigin: true,
       pathRewrite: {
         '^/api/': '',

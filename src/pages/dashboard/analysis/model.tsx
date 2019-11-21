@@ -78,7 +78,6 @@ const Model: ModelType = {
 
   reducers: {
     save(state, action) {
-      console.log(action.payload.list);
       return {
         ...state,
         total_focus: action.payload.total_focus,
