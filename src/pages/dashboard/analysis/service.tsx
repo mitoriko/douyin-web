@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
-export async function fakeChartData() {
-  return request('/api/total/list', {
+export async function fakeTotalData() {
+  return request('/api/douyin/total/list', {
     method: 'GET',
   });
 }

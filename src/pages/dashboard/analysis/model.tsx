@@ -1,7 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { fakeChartData } from './service';
-import { message } from 'antd';
+import { fakeTotalData } from './service';
 
 export type Effect = (
   action: AnyAction,
@@ -20,9 +19,9 @@ export interface StateType {
   list?: list[];
 }
 export interface list {
-  user_id?: string;
-  dy_id?: string;
-  dy_tk?: string;
+  userId?: string;
+  dyId?: string;
+  dyTk?: string;
   nickname?: string;
   shortid?: string;
   avatar?: string;
@@ -31,19 +30,18 @@ export interface list {
   follower?: number;
   likenum?: number;
   opus?: number;
-  sum_digg?: number;
-  sum_comment?: number;
-  sum_play?: number;
-  sum_share?: number;
-  add_time?: string;
+  sumDigg?: number;
+  sumComment?: number;
+  sumPlay?: number;
+  sumShare?: number;
+  addTime?: string;
 }
 
 export interface ModelType {
-  namespace: string;
+  namespace: 'dashboardTotal';
   state: StateType;
   effects: {
-    fetch: Effect;
-    fetchSalesData: Effect;
+    fetchTotalData: Effect;
   };
   reducers: {
     save: Reducer<StateType>;
@@ -64,35 +62,34 @@ const initState = {
 };
 
 const Model: ModelType = {
-  namespace: 'dashboardAndanalysis',
+  namespace: 'dashboardTotal',
 
   state: initState,
 
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(fakeChartData);
-      // message.error(response);
+    *fetchTotalData(_, { call, put }) {
+      const response = yield call(fakeTotalData);
       yield put({
         type: 'save',
-        payload: response,
-      });
-    },
-    *fetchSalesData(_, { call, put }) {
-      const response = yield call(fakeChartData);
-      yield put({
-        type: 'save',
-        payload: {
-          salesData: response.salesData,
-        },
+        payload: response.data,
       });
     },
   },
 
   reducers: {
-    save(state, { payload }) {
+    save(state, action) {
+      console.log(action.payload.list);
       return {
         ...state,
-        ...payload,
+        total_focus: action.payload.total_focus,
+        total_follower: action.payload.total_follower,
+        total_likenum: action.payload.total_likenum,
+        total_opus: action.payload.total_opus,
+        total_digg: action.payload.total_digg,
+        total_comment: action.payload.total_comment,
+        total_play: action.payload.total_play,
+        total_share: action.payload.total_share,
+        list: action.payload.list || {},
       };
     },
     clear() {

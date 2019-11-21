@@ -81,7 +81,7 @@ const defaultFooterDom = (
         blankTarget: true,
       },
       {
-        key: 'A-Cubic',
+        key: 'gift',
         title: '礼余Gift+',
         href: 'http://www.a-cubic.com/#about-us',
         blankTarget: true,
