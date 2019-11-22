@@ -78,7 +78,6 @@ const Model: ModelType = {
 
   reducers: {
     save(state, action) {
-      console.log(action.payload);
       return {
         ...state,
         dyUser: action.payload.dyUser || {},

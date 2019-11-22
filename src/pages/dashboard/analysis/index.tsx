@@ -57,7 +57,7 @@ const columns = [
       return (
         <span>
           <img style={{ height: 40 }} src={row.avatar} />{' '}
-          <a href={'/dashboard/dyuser?id=' + row.dyId}>{row.nickname} </a>
+          <a href={'/dashboard/dyuser/' + row.dyId}>{row.nickname} </a>
         </span>
       );
     },

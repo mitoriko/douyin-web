@@ -6,38 +6,13 @@ import { GridContent } from '@ant-design/pro-layout';
 import Link from 'umi/link';
 import { RouteChildrenProps } from 'react-router';
 import { connect } from 'dva';
-import { StateType } from './model';
+import { dyUser, StateType } from './model';
 // import Projects from './components/Projects';
 // import Articles from './components/Articles';
 // import Applications from './components/Applications';
 import styles from './style.less';
+import AvatarList from './components/AvatarList';
 
-const operationTabList = [
-  // {
-  //   key: 'articles',
-  //   tab: (
-  //     <span>
-  //       文章 <span style={{ fontSize: 14 }}>(8)</span>
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   key: 'applications',
-  //   tab: (
-  //     <span>
-  //       应用 <span style={{ fontSize: 14 }}>(8)</span>
-  //     </span>
-  //   ),
-  // },
-  {
-    key: 'projects',
-    tab: (
-      <span>
-        项目 <span style={{ fontSize: 14 }}>(8)</span>
-      </span>
-    ),
-  },
-];
 const TagType = {
   key: '',
   label: '',
@@ -79,12 +54,13 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const urlParams = window.location.search;
+    // const urlParams = window.location.search;
+    // console.log(this.props.match.params.id)
 
     dispatch({
       type: 'dyuser/fetchDyUser',
       payload: {
-        id: urlParams.replace('?id=', ''),
+        id: this.props.match.params.id,
       },
     });
   }
@@ -144,6 +120,33 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
       loading,
     } = this.props;
     const dataLoading = loading || !(dyUser && Object.keys(dyUser).length);
+    const operationTabList = [
+      // {
+      //   key: 'articles',
+      //   tab: (
+      //     <span>
+      //       文章 <span style={{ fontSize: 14 }}>(8)</span>
+      //     </span>
+      //   ),
+      // },
+      // {
+      //   key: 'applications',
+      //   tab: (
+      //     <span>
+      //       应用 <span style={{ fontSize: 14 }}>(8)</span>
+      //     </span>
+      //   ),
+      // },
+      {
+        key: 'projects',
+        tab: (
+          <span>
+            视频 <span style={{ fontSize: 14 }}>({dyUser.opus})</span>
+          </span>
+        ),
+      },
+    ];
+
     return (
       <GridContent>
         <Row gutter={24}>
@@ -155,20 +158,38 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                     <img alt="" src={dyUser.avatar} />
                     <div className={styles.name}>{dyUser.nickname}</div>
                     <div>{dyUser.shortid}</div>
+                    <div>签名：{dyUser.sign}</div>
                   </div>
-                  <div className={styles.detail}>
+                  <div>
                     <p>
                       <i className={styles.title} />
-                      {dyUser.sign}
+                      <Icon type="star" />
+                      {dyUser.follower}
                     </p>
                     <p>
                       <i className={styles.group} />
+                      <Icon type="heart" />
+                      {dyUser.likenum}
+                    </p>
+                    <p>
+                      <i className={styles.address} />
+                      <Icon type="play-circle" />
+                      {dyUser.sumPlay}
+                    </p>
+                    <p>
+                      <i className={styles.address} />
+                      <Icon type="user-add" />
                       {dyUser.focus}
                     </p>
                     <p>
                       <i className={styles.address} />
-                      {dyUser.follower}
-                      {dyUser.likenum}
+                      <Icon type="share-alt" />
+                      {dyUser.sumShare}
+                    </p>
+                    <p>
+                      <i className={styles.address} />
+                      <Icon type="message" />
+                      {dyUser.sumComment}
                     </p>
                   </div>
                   <Divider dashed />
@@ -235,22 +256,40 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                     <Card
                       className={styles.card}
                       hoverable
-                      cover={<img alt={item.title} src={item.cover} />}
+                      cover={<img alt={item.desc} src={item.coverImg} />}
                     >
-                      <Card.Meta title={<a>{item.title}</a>} description={item.subDescription} />
-                      <div className={styles.cardItemContent}>
-                        <span>{moment(item.updatedAt).fromNow()}</span>
-                        <div className={styles.avatarList}>
-                          <AvatarList size="small">
-                            {item.members.map(member => (
-                              <AvatarList.Item
-                                key={`${item.id}-avatar-${member.id}`}
-                                src={member.avatar}
-                                tips={member.name}
-                              />
-                            ))}
-                          </AvatarList>
+                      <Card.Meta title={<a>{item.desc}</a>} />
+                      <div>
+                        <div className={styles.details}>
+                          <p>
+                            <i className={styles.title} />
+                            累计播放量：{item.playCount}
+                          </p>
+                          <p>
+                            <i className={styles.group} />
+                            点赞数：{item.diggCount}
+                          </p>
+                          <p>
+                            <i className={styles.address} />
+                            分享数：{item.shareCount}
+                          </p>
+                          <p>
+                            <i className={styles.address} />
+                            评论数：{item.commentCount}
+                          </p>
                         </div>
+                        {/*<span>{moment(item.updatedAt).fromNow()}</span>*/}
+                        {/*<div className={styles.avatarList}>*/}
+                        {/*<AvatarList size="small">*/}
+                        {/*{item.members.map(member => (*/}
+                        {/*<AvatarList.Item*/}
+                        {/*key={`${item.id}-avatar-${member.id}`}*/}
+                        {/*src={member.avatar}*/}
+                        {/*tips={member.name}*/}
+                        {/*/>*/}
+                        {/*))}*/}
+                        {/*</AvatarList>*/}
+                        {/*</div>*/}
                       </div>
                     </Card>
                   </List.Item>

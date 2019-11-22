@@ -125,8 +125,9 @@ export default {
             {
               name: 'dyuser',
               icon: 'dashboard',
-              path: '/dashboard/dyuser',
+              path: '/dashboard/dyuser/:id',
               component: './dashboard/dyuser',
+              hidden: true,
             },
             {
               component: './404',
