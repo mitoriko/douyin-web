@@ -127,7 +127,7 @@ export default {
               icon: 'dashboard',
               path: '/dashboard/dyuser/:id',
               component: './dashboard/dyuser',
-              hidden: true,
+              hideInMenu: true,
             },
             {
               component: './404',

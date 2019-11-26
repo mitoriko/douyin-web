@@ -12,6 +12,7 @@ import { dyUser, StateType } from './model';
 // import Applications from './components/Applications';
 import styles from './style.less';
 import AvatarList from './components/AvatarList';
+import numeral from 'numeral';
 
 const TagType = {
   key: '',
@@ -164,32 +165,32 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                     <p>
                       <i className={styles.title} />
                       <Icon type="star" />
-                      {dyUser.follower}
+                      粉丝数：{numeral(dyUser.follower).format('0,0')}
                     </p>
                     <p>
                       <i className={styles.group} />
                       <Icon type="heart" />
-                      {dyUser.likenum}
+                      获赞数：{numeral(dyUser.likenum).format('0,0')}
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="play-circle" />
-                      {dyUser.sumPlay}
+                      播放量：{numeral(dyUser.sumPlay).format('0,0')}
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="user-add" />
-                      {dyUser.focus}
+                      关注数：{numeral(dyUser.focus).format('0,0')}
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="share-alt" />
-                      {dyUser.sumShare}
+                      分享数：{numeral(dyUser.sumShare).format('0,0')}
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="message" />
-                      {dyUser.sumComment}
+                      评论数：{numeral(dyUser.sumComment).format('0,0')}
                     </p>
                   </div>
                   <Divider dashed />
@@ -263,19 +264,19 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                         <div className={styles.details}>
                           <p>
                             <i className={styles.title} />
-                            累计播放量：{item.playCount}
+                            累计播放量：{numeral(item.playCount).format('0,0')}
                           </p>
                           <p>
                             <i className={styles.group} />
-                            点赞数：{item.diggCount}
+                            点赞数：{numeral(item.diggCount).format('0,0')}
                           </p>
                           <p>
                             <i className={styles.address} />
-                            分享数：{item.shareCount}
+                            分享数：{numeral(item.shareCount).format('0,0')}
                           </p>
                           <p>
                             <i className={styles.address} />
-                            评论数：{item.commentCount}
+                            评论数：{numeral(item.commentCount).format('0,0')}
                           </p>
                         </div>
                         {/*<span>{moment(item.updatedAt).fromNow()}</span>*/}

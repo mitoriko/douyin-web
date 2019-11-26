@@ -57,7 +57,9 @@ const columns = [
       return (
         <span>
           <img style={{ height: 40 }} src={row.avatar} />{' '}
-          <a href={'/dashboard/dyuser/' + row.dyId}>{row.nickname} </a>
+          <a target="_blank" href={'/dashboard/dyuser/' + row.dyId}>
+            {row.nickname}{' '}
+          </a>
         </span>
       );
     },
@@ -68,6 +70,10 @@ const columns = [
     key: 'sumPlay',
     sorter: (a: { sumPlay: number }, b: { sumPlay: number }) => a.sumPlay - b.sumPlay,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.sumPlay).format('0,0');
+      return <span>{a}</span>;
+    },
   },
   {
     title: <FormattedMessage id="dashboardandanalysis.table.fans" defaultMessage="Fans" />,
@@ -75,6 +81,10 @@ const columns = [
     key: 'follower',
     sorter: (a: { follower: number }, b: { follower: number }) => a.follower - b.follower,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.follower).format('0,0');
+      return <span>{a}</span>;
+    },
   },
   {
     title: <FormattedMessage id="dashboardandanalysis.table.video" defaultMessage="Video" />,
@@ -82,13 +92,21 @@ const columns = [
     key: 'opus',
     sorter: (a: { opus: number }, b: { opus: number }) => a.opus - b.opus,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.opus).format('0,0');
+      return <span>{a}</span>;
+    },
   },
   {
     title: <FormattedMessage id="dashboardandanalysis.table.zan" defaultMessage="Digg" />,
-    dataIndex: 'sumDigg',
-    key: 'sumDigg',
-    sorter: (a: { sumDigg: number }, b: { sumDigg: number }) => a.sumDigg - b.sumDigg,
+    dataIndex: 'likenum',
+    key: 'likenum',
+    sorter: (a: { likenum: number }, b: { likenum: number }) => a.likenum - b.likenum,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.likenum).format('0,0');
+      return <span>{a}</span>;
+    },
   },
   {
     title: <FormattedMessage id="dashboardandanalysis.table.comment" defaultMessage="Comment" />,
@@ -96,6 +114,10 @@ const columns = [
     key: 'sumComment',
     sorter: (a: { sumComment: number }, b: { sumComment: number }) => a.sumComment - b.sumComment,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.sumComment).format('0,0');
+      return <span>{a}</span>;
+    },
   },
   {
     title: <FormattedMessage id="dashboardandanalysis.table.share" defaultMessage="Share" />,
@@ -103,6 +125,10 @@ const columns = [
     key: 'sumShare',
     sorter: (a: { sumShare: number }, b: { sumShare: number }) => a.sumShare - b.sumShare,
     className: styles.alignRight,
+    render: (text, row, index) => {
+      const a = numeral(row.sumShare).format('0,0');
+      return <span>{a}</span>;
+    },
   },
 ];
 
@@ -268,7 +294,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_follower}
+                  total={numeral(total_follower).format('0,0')}
                   footer={
                     <Field
                       label={
@@ -321,7 +347,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_opus}
+                  total={numeral(total_opus).format('0,0')}
                   footer={
                     <Field
                       label={
@@ -374,7 +400,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_play}
+                  total={numeral(total_play).format('0,0')}
                   footer={
                     <Field
                       label={
@@ -427,7 +453,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_digg}
+                  total={numeral(total_likenum).format('0,0')}
                   footer={
                     <Field
                       label={
@@ -480,7 +506,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_comment}
+                  total={numeral(total_comment).format('0,0')}
                   footer={
                     <Field
                       label={
@@ -533,7 +559,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                     </Tooltip>
                   }
                   loading={loading}
-                  total={total_share}
+                  total={numeral(total_share).format('0,0')}
                   footer={
                     <Field
                       label={
