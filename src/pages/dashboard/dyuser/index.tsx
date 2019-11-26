@@ -7,17 +7,9 @@ import Link from 'umi/link';
 import { RouteChildrenProps } from 'react-router';
 import { connect } from 'dva';
 import { dyUser, StateType } from './model';
-// import Projects from './components/Projects';
-// import Articles from './components/Articles';
-// import Applications from './components/Applications';
 import styles from './style.less';
 import AvatarList from './components/AvatarList';
 import numeral from 'numeral';
-
-const TagType = {
-  key: '',
-  label: '',
-};
 
 interface DyUserProps extends RouteChildrenProps {
   dispatch: Dispatch<any>;
@@ -25,7 +17,6 @@ interface DyUserProps extends RouteChildrenProps {
   loading: boolean;
 }
 interface DyUserState {
-  newTags: TagType[];
   tabKey: 'projects';
   inputVisible: boolean;
   inputValue: string;
@@ -45,7 +36,6 @@ interface DyUserState {
 )
 class DyUser extends PureComponent<DyUserrops, DyUserState> {
   state: DyUserState = {
-    newTags: [],
     inputVisible: false,
     inputValue: '',
     tabKey: 'projects',
@@ -87,20 +77,6 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
     this.setState({ inputValue: e.target.value });
   };
 
-  handleInputConfirm = () => {
-    const { state } = this;
-    const { inputValue } = state;
-    let { newTags } = state;
-    if (inputValue && newTags.filter(tag => tag.label === inputValue).length === 0) {
-      newTags = [...newTags, { key: `new-${newTags.length}`, label: inputValue }];
-    }
-    this.setState({
-      newTags,
-      inputVisible: false,
-      inputValue: '',
-    });
-  };
-
   renderChildrenByTabKey = (tabKey: DyUserState['tabKey']) => {
     if (tabKey === 'projects') {
       return <Projects />;
@@ -115,29 +91,13 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
   };
 
   render() {
-    const { newTags, inputVisible, inputValue, tabKey } = this.state;
+    const { inputVisible, inputValue, tabKey } = this.state;
     const {
       dyuser: { dyUser, list },
       loading,
     } = this.props;
     const dataLoading = loading || !(dyUser && Object.keys(dyUser).length);
     const operationTabList = [
-      // {
-      //   key: 'articles',
-      //   tab: (
-      //     <span>
-      //       文章 <span style={{ fontSize: 14 }}>(8)</span>
-      //     </span>
-      //   ),
-      // },
-      // {
-      //   key: 'applications',
-      //   tab: (
-      //     <span>
-      //       应用 <span style={{ fontSize: 14 }}>(8)</span>
-      //     </span>
-      //   ),
-      // },
       {
         key: 'projects',
         tab: (
@@ -165,76 +125,35 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                     <p>
                       <i className={styles.title} />
                       <Icon type="star" />
-                      粉丝数：{numeral(dyUser.follower).format('0,0')}
+                      <b>粉丝数：{numeral(dyUser.follower).format('0,0')}</b>
                     </p>
                     <p>
                       <i className={styles.group} />
                       <Icon type="heart" />
-                      获赞数：{numeral(dyUser.likenum).format('0,0')}
+                      <b>获赞数：{numeral(dyUser.likenum).format('0,0')}</b>
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="play-circle" />
-                      播放量：{numeral(dyUser.sumPlay).format('0,0')}
+                      <b>播放量：{numeral(dyUser.sumPlay).format('0,0')}</b>
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="user-add" />
-                      关注数：{numeral(dyUser.focus).format('0,0')}
+                      <b>关注数：{numeral(dyUser.focus).format('0,0')}</b>
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="share-alt" />
-                      分享数：{numeral(dyUser.sumShare).format('0,0')}
+                      <b>分享数：{numeral(dyUser.sumShare).format('0,0')}</b>
                     </p>
                     <p>
                       <i className={styles.address} />
                       <Icon type="message" />
-                      评论数：{numeral(dyUser.sumComment).format('0,0')}
+                      <b>评论数：{numeral(dyUser.sumComment).format('0,0')}</b>
                     </p>
                   </div>
                   <Divider dashed />
-                  {/* <div className={styles.tags}>
-                    <div className={styles.tagsTitle}>标签</div>
-                    {currentUser.tags.concat(newTags).map(item => (
-                      <Tag key={item.key}>{item.label}</Tag>
-                    ))}
-                    {inputVisible && (
-                      <Input
-                        ref={ref => this.saveInputRef(ref)}
-                        type="text"
-                        size="small"
-                        style={{ width: 78 }}
-                        value={inputValue}
-                        onChange={this.handleInputChange}
-                        onBlur={this.handleInputConfirm}
-                        onPressEnter={this.handleInputConfirm}
-                      />
-                    )}
-                    {!inputVisible && (
-                      <Tag
-                        onClick={this.showInput}
-                        style={{ background: '#fff', borderStyle: 'dashed' }}
-                      >
-                        <Icon type="plus" />
-                      </Tag>
-                    )}
-                  </div>
-                  <Divider style={{ marginTop: 16 }} dashed />
-                  <div className={styles.team}>
-                    <div className={styles.teamTitle}>团队</div>
-                    <Row gutter={36}>
-                      {currentUser.notice &&
-                      currentUser.notice.map(item => (
-                        <Col key={item.id} lg={24} xl={12}>
-                          <Link to={item.href}>
-                            <Avatar size="small" src={item.logo} />
-                            {item.member}
-                          </Link>
-                        </Col>
-                      ))}
-                    </Row>
-                  </div>*/}
                 </div>
               )}
             </Card>
@@ -279,18 +198,6 @@ class DyUser extends PureComponent<DyUserrops, DyUserState> {
                             评论数：{numeral(item.commentCount).format('0,0')}
                           </p>
                         </div>
-                        {/*<span>{moment(item.updatedAt).fromNow()}</span>*/}
-                        {/*<div className={styles.avatarList}>*/}
-                        {/*<AvatarList size="small">*/}
-                        {/*{item.members.map(member => (*/}
-                        {/*<AvatarList.Item*/}
-                        {/*key={`${item.id}-avatar-${member.id}`}*/}
-                        {/*src={member.avatar}*/}
-                        {/*tips={member.name}*/}
-                        {/*/>*/}
-                        {/*))}*/}
-                        {/*</AvatarList>*/}
-                        {/*</div>*/}
                       </div>
                     </Card>
                   </List.Item>
