@@ -196,7 +196,7 @@ export default {
       target: 'http://localhost:8999',
       changeOrigin: true,
       pathRewrite: {
-        '^/api/': '',
+        '': '',
       },
     },
   },
