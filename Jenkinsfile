@@ -13,7 +13,8 @@ local_path=`echo ${local_path/jenkins_home/"docker/jenkins"}`
 echo "$local_path"
 REAL_PATH="$local_path"
 echo "$REAL_PATH"
-docker run --rm -v "$REAL_PATH":/app -v "$REAL_CACHE":/app/node_modules -w /app node:onbuild npm install && npm build
+docker run --rm -v "$REAL_PATH":/app -v "$REAL_CACHE":/app/node_modules -w /app node:onbuild npm install
+docker run --rm -v "$REAL_PATH":/app -v "$REAL_CACHE":/app/node_modules -w /app node:onbuild npm run build
 docker build -t "$REGISTRY_URL"/"$REGISTRY_IMAGE" .
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" "$REGISTRY_URL" && docker push "$REGISTRY_URL"/"$REGISTRY_IMAGE"'''
       }
